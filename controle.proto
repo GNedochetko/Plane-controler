@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package trafego;
+
+service ControleTrafego {
+  // Mantém o cliente informado até sua operação terminar.
+  rpc SolicitarOperacao (Solicitacao) returns (stream Atualizacao);
+}
+
+message Solicitacao {
+  string aeronave_id = 1;
+  string operacao = 2; // "pouso" ou "decolagem"
+}
+
+message Atualizacao {
+  string estado = 1; // "aguardando", "em_operacao" ou "finalizada"
+  uint32 posicao_fila = 2;
+  string mensagem = 3;
+}
